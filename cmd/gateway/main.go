@@ -7,7 +7,9 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/amalshaji/fiber-netlify/adapter"
 	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
 )
@@ -59,7 +61,7 @@ func getGeoLocation(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(resp)
 }
 
-var fiberLambda *FiberLambda
+var fiberLambda *adapter.FiberLambda
 
 func init() {
 	app := fiber.New()
@@ -71,7 +73,7 @@ func init() {
 	})
 	app.Get("/api/:ip", cacheRequest(10*time.Minute), getGeoLocation)
 
-	fiberLambda = New(app)
+	fiberLambda = adapter.New(app)
 }
 
 func handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
@@ -80,5 +82,5 @@ func handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.API
 }
 
 func main() {
-	lambda.start(handler)
+	lambda.Start(handler)
 }
