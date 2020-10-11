@@ -78,13 +78,6 @@
 			class:field-danger={!$validity.valid}
 			class:field-success={$validity.valid}
 			use:validate={ip} />
-		{#if $validity.dirty && !$validity.valid}
-			<span class="validation-hint">
-				INVALID -
-				{$validity.message}
-				{$validity.dirty}
-			</span>
-		{/if}<br />
 		<button
 			disabled={!$validity.valid}
 			type="button"
