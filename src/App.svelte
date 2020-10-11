@@ -1,16 +1,22 @@
 <script>
+	import { emailValidator, requiredValidator } from "./validators.js";
+	import { createFieldValidator } from "./validation.js";
+
+	const [validity, validate] = createFieldValidator(
+		requiredValidator(),
+		emailValidator()
+	);
+
 	let ip = "";
 	let disp_ip = "";
 	let country = "";
 	let region = "";
 	let isp = "";
-	let message = "";
 	let lat = "";
 	let lon = "";
 
 	const getData = () => {
 		output.setAttribute("hidden", "");
-		error.setAttribute("hidden", "");
 		fetch("/api/" + ip)
 			.then((res) => res.json())
 			.then((data) => {
@@ -22,10 +28,6 @@
 				lat = data.lat;
 				lon = data.lon;
 				output.removeAttribute("hidden");
-			})
-			.catch((err) => {
-				message = err.message;
-				error.removeAttribute("hidden");
 			});
 	};
 </script>
@@ -47,13 +49,48 @@
 		height: 300px;
 		overflow: auto;
 	}
+	input {
+		outline: none;
+		border-width: 2px;
+	}
+
+	.validation-hint {
+		color: red;
+		padding: 6px 0;
+	}
+
+	.field-danger {
+		border-color: red;
+	}
+
+	.field-success {
+		border-color: green;
+	}
 </style>
 
 <div class="container">
 	<center>
 		<h2>IP Geolocator</h2>
-		<input type="text" bind:value={ip} id="ip-add" />
-		<button type="button" class="btn btn-dark" on:click={getData}>Locate IP</button>
+		<input
+			type="text"
+			placeholder="Enter IP address"
+			bind:value={ip}
+			id="ip-add"
+			class:field-danger={!$validity.valid}
+			class:field-success={$validity.valid}
+			use:validate={ip} />
+		{#if $validity.dirty && !$validity.valid}
+			<span class="validation-hint">
+				INVALID -
+				{$validity.message}
+				{$validity.dirty}
+			</span>
+		{/if}<br />
+		<button
+			disabled={!$validity.valid}
+			type="button"
+			class="btn btn-success"
+			on:click={getData}>Locate IP</button>
 		<div hidden id="output">
 			<div class="card">
 				IP:
@@ -75,6 +112,5 @@
 				src="https://www.openstreetmap.org/export/embed.html?bbox={lon - 0.5}%2C{lat - 0.5}%2C{lon + 0.5}%2C{lat + 0.5}&layer=mapnik▮={lat}%2C{lon}"
 				style="border: 1px solid black" /><br />
 		</div>
-		<div hidden id="error">{message}</div>
 	</center>
 </div>
