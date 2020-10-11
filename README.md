@@ -5,3 +5,24 @@
 Use the template. 
 
 Thanks to @fenny(author of gofiber) for the fiber-lambda api
+
+### Usage
+
+```bash
+# use template
+git clone 
+npm run build
+git add .
+git commit 
+git push
+```
+
+#### Netlify can build sveltejs for you, change `build.sh` to
+```bash
+# build.sh
+
+npm run build
+GOBIN=$(pwd)/functions go install ./...
+```
+
+I find manual build better
