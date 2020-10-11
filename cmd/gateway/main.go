@@ -1,12 +1,13 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"time"
 
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
 )
@@ -58,7 +59,9 @@ func getGeoLocation(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(resp)
 }
 
-func main() {
+var fiberLambda *FiberLambda
+
+func init() {
 	app := fiber.New()
 	app.Static("/", "./public", fiber.Static{
 		Compress: true,
@@ -67,5 +70,15 @@ func main() {
 		return c.SendFile("index")
 	})
 	app.Get("/api/:ip", cacheRequest(10*time.Minute), getGeoLocation)
-	log.Fatal(app.Listen(":3000"))
+
+	fiberLambda = New(app)
+}
+
+func handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	// If no name is provided in the HTTP request body, throw an error
+	return fiberLambda.ProxyWithContext(ctx, req)
+}
+
+func main() {
+	lambda.start(handler)
 }
