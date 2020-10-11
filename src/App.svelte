@@ -21,7 +21,6 @@
 			.then((res) => res.json())
 			.then((data) => {
 				disp_ip = ip;
-				ip = "";
 				country = data.country;
 				region = data.regionName;
 				isp = data.isp;
