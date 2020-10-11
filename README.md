@@ -1,5 +1,7 @@
-# netlify-go-function-demo [![Netlify Status](https://api.netlify.com/api/v1/badges/a7cd6625-f2c7-4701-b249-c70743234a32/deploy-status)](https://app.netlify.com/sites/go-function-demo/deploys)
+# Deploying gofiber + sveltejs on netlify
 
-A simple repo to demonstrate how to launch a Go microservice on Netlify using [Netlify functions](https://functions.netlify.com) and URL rewriting.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f45d518a-e827-4373-9a89-53fd17879414/deploy-status)](https://app.netlify.com/sites/gofiber-svelte/deploys)
 
-[See demo site](https://go-function-demo.netlify.com) and [detailed blog post explanation](https://blog.carlmjohnson.net/post/2020/2020-03-01-how-to-host-golang-on-netlify-for-free/).
+Simply clone/fork and deploy on netlify. 
+
+Thanks to @fenny(author of gofiber) for the fiber-lambda api

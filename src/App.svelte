@@ -62,7 +62,7 @@
 				scrolling="no"
 				marginheight="0"
 				marginwidth="0"
-				src="https://www.openstreetmap.org/export/embed.html?bbox={lon - 0.2}%2C{lat - 0.2}%2C{lon + 0.2}%2C{lat + 0.2}&layer=mapnik&marker={lat}%2C{lon}"
+				src="https://www.openstreetmap.org/export/embed.html?bbox={lon - 0.5}%2C{lat - 0.5}%2C{lon + 0.5}%2C{lat + 0.5}&layer=mapnik&marker={lat}%2C{lon}"
 				style="border: 1px solid black" /><br />
 		</div>
 		<div hidden id="error">{message}</div>
