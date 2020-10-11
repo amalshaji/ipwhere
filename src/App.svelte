@@ -1,5 +1,6 @@
 <script>
 	let ip = "";
+	let disp_ip = "";
 	let country = "";
 	let region = "";
 	let isp = "";
@@ -13,6 +14,7 @@
 		fetch("/api/" + ip)
 			.then((res) => res.json())
 			.then((data) => {
+				disp_ip = ip;
 				ip = "";
 				country = data.country;
 				region = data.regionName;
@@ -54,6 +56,8 @@
 		<button type="button" class="btn btn-dark" on:click={getData}>Locate IP</button>
 		<div hidden id="output">
 			<div class="card">
+				IP:
+				<b>{disp_ip}</b>
 				Country:
 				<b>{country}</b>
 				&nbsp; Region:
