@@ -38,7 +38,7 @@
 
 <div class="container">
   <center>
-    <!-- <h1>IP Where</h1> -->
+    <h1>IP Where</h1>
     <input
       type="text"
       placeholder="Enter IP address"
