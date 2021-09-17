@@ -15,7 +15,7 @@ var fiberLambda *adapter.FiberLambda
 
 func init() {
 	app := fiber.New()
-	app.Static("/", "./public")
+	app.Static("/", "./web/public")
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendFile("index")
 	})
